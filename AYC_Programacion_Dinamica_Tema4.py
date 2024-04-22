@@ -1,7 +1,6 @@
 # EJERCICIO 5
 import math
 
-
 def warshall(M):
     n = len(M)
     C = [[False] * n for _ in range(n)]
@@ -75,7 +74,6 @@ def calcular_ganancias(vc, N, D):
 
 
 #EJERCICIO 7
-
 def subsecuencia_comun_mas_larga(A, B):
     m, n = len(A), len(B)
     dp = [[0] * (n + 1) for _ in range(m + 1)]
@@ -105,13 +103,13 @@ def subsecuencia_comun_mas_larga(A, B):
     return lcs_length, lcs[::-1]
 
 # Ejemplo de uso
-if __name__ == "__main__":
-    A = [0, 1, 1, 0, 1, 0, 1, 0]
-    B = [1, 0, 1, 0, 0, 1, 0, 0, 1]
-
-    longitud, secuencia = subsecuencia_comun_mas_larga(A, B)
-    print("Longitud de la subsecuencia común más larga:", longitud)
-    print("Subsecuencia común más larga:", secuencia)
+#if __name__ == "__main__":
+#    A = [0, 1, 1, 0, 1, 0, 1, 0]
+#    B = [1, 0, 1, 0, 0, 1, 0, 0, 1]
+#
+#    longitud, secuencia = subsecuencia_comun_mas_larga(A, B)
+#    print("Longitud de la subsecuencia común más larga:", longitud)
+#    print("Subsecuencia común más larga:", secuencia)
 
 
 
