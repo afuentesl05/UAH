@@ -39,8 +39,6 @@ def warshall(M):
 
 
 #EJERCICIO 6
-
-
 def calcular_probabilidades_vc(vc):
     total_vc = sum(vc)
     probabilidades = [valor / total_vc for valor in vc]
@@ -67,12 +65,53 @@ def calcular_ganancias(vc, N, D):
     return ganancias_maximas
 
 # Ejemplo de uso
-if __name__ == "__main__":
-    vc = [5, 4, 3, 2]  # Valores de Calidad de los equipos (Grifos, Serpientes, Cuervos, Tejones)
-    N = 3  # Cantidad de partidos que debe ganar un equipo para ganar el torneo
-    D = 100  # Cantidad de dinero apostado por Javi Potter
+#if __name__ == "__main__":
+#    vc = [5, 4, 3, 2]  # Valores de Calidad de los equipos (Grifos, Serpientes, Cuervos, Tejones)
+#    N = 3  # Cantidad de partidos que debe ganar un equipo para ganar el torneo
+#    D = 100  # Cantidad de dinero apostado por Javi Potter
+#
+#    ganancias = calcular_ganancias(vc, N, D)
+#    print("Posibles ganancias si ganan los Grifos:", ganancias)
 
-    ganancias = calcular_ganancias(vc, N, D)
-    print("Posibles ganancias si ganan los Grifos:", ganancias)
+
+#EJERCICIO 7
+
+def subsecuencia_comun_mas_larga(A, B):
+    m, n = len(A), len(B)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    # Llenar la matriz dp
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if A[i - 1] == B[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+    # Reconstruir la subsecuencia común más larga
+    lcs_length = dp[m][n]
+    lcs = []
+    i, j = m, n
+    while i > 0 and j > 0:
+        if A[i - 1] == B[j - 1]:
+            lcs.append(A[i - 1])
+            i -= 1
+            j -= 1
+        elif dp[i - 1][j] > dp[i][j - 1]:
+            i -= 1
+        else:
+            j -= 1
+
+    return lcs_length, lcs[::-1]
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    A = [0, 1, 1, 0, 1, 0, 1, 0]
+    B = [1, 0, 1, 0, 0, 1, 0, 0, 1]
+
+    longitud, secuencia = subsecuencia_comun_mas_larga(A, B)
+    print("Longitud de la subsecuencia común más larga:", longitud)
+    print("Subsecuencia común más larga:", secuencia)
+
 
 
