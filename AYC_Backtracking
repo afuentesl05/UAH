@@ -174,7 +174,7 @@ def sustituir(cadena, M, final, visitados):
 texto = "acabadcda"
 final = "d"
 M = {"aa":"b", "ab": "b", "ac": "a", "ad": "d", "ba": "c", "bb": "a", "bc": "d", "bd": "a", "ca": "b", "cb": "a", "cc": "c", "cd": "c", "da": "d", "db": "c", "dc": "d", "dd": "b"}
-visitados = set()
+visitados = set() 
 resultado = sustituir(texto, M, final, visitados)
 if resultado:
     print("Cadena reducida a un solo carácter:", resultado)
