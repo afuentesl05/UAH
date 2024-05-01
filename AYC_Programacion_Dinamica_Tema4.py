@@ -5,12 +5,12 @@ def warshall(M):
     n = len(M)
     C = [[False] * n for _ in range(n)]
 
-    # Inicializar C con la matriz de adyacencia M
+    # Inicializar C con la matriz de adyacencia Mw
     for i in range(n):
         for j in range(n):
             C[i][j] = M[i][j]
 
-    # Rellenar Matriz
+    # Rellenar Matriz bottom-up
     for k in range(n):
         for i in range(n):
             for j in range(n):
@@ -21,20 +21,19 @@ def warshall(M):
 
     return C
 
-# Ejemplo de uso
-#if __name__ == "__main__":
-#    # Ejemplo de matriz de adyacencia M
-#    M = [
-#        [False, True, False, False],
-#        [False, False, True, True],
-#        [False, False, False, False],
-#        [True, False, True, False]
-#    ]
-#
-#    C = warshall(M)
-#    print("Matriz de caminos:")
-#    for row in C:
-#        print(row)
+# Ejemplo de uso ejercicio 5
+
+# # Ejemplo de matriz de adyacencia M
+# M = [
+#     [False, True, False, False],
+#     [False, False, True, True],
+#     [False, False, False, False],
+#     [True, False, True, False]]
+# 
+# C = warshall(M)
+# print("Matriz de caminos:")
+# for row in C:
+#     print(row)
 
 
 #EJERCICIO 6
@@ -63,14 +62,14 @@ def calcular_ganancias(vc, N, D):
 
     return ganancias_maximas
 
-# Ejemplo de uso
-#if __name__ == "__main__":
-#    vc = [5, 4, 3, 2]  # Valores de Calidad de los equipos (Grifos, Serpientes, Cuervos, Tejones)
-#    N = 3  # Cantidad de partidos que debe ganar un equipo para ganar el torneo
-#    D = 100  # Cantidad de dinero apostado por Javi Potter
-#
-#    ganancias = calcular_ganancias(vc, N, D)
-#    print("Posibles ganancias si ganan los Grifos:", ganancias)
+# Ejemplo de uso ejercicio 6
+
+#vc = [5, 4, 3, 2]  # Valores de Calidad de los equipos (Grifos, Serpientes, Cuervos, Tejones)
+#N = 3  # Cantidad de partidos que debe ganar un equipo para ganar el torneo
+#D = 100  # Cantidad de dinero apostado por Javi Potter
+
+#ganancias = calcular_ganancias(vc, N, D)
+#print("Posibles ganancias si ganan los Grifos:", ganancias)
 
 
 #EJERCICIO 7
@@ -102,14 +101,14 @@ def subsecuencia_comun_mas_larga(A, B):
 
     return lcs_length, lcs[::-1]
 
-# Ejemplo de uso
-#if __name__ == "__main__":
-#    A = [0, 1, 1, 0, 1, 0, 1, 0]
-#    B = [1, 0, 1, 0, 0, 1, 0, 0, 1]
+# Ejemplo de uso ejercicio 7
 #
-#    longitud, secuencia = subsecuencia_comun_mas_larga(A, B)
-#    print("Longitud de la subsecuencia común más larga:", longitud)
-#    print("Subsecuencia común más larga:", secuencia)
+#A = [0, 1, 1, 0, 1, 0, 1, 0]
+#B = [1, 0, 1, 0, 0, 1, 0, 0, 
+
+#longitud, secuencia = subsecuencia_comun_mas_larga(A, B)
+#print("Longitud de la subsecuencia común más larga:", longitud)
+#print("Subsecuencia común más larga:", secuencia)
 
 
 
