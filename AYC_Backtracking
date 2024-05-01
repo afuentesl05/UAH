@@ -24,8 +24,45 @@ def GenerarPermutaciones(entrada, salida, validos, k):
                 validos[i] = True
 
 #PROBADOR EJERCICIO 1
-entrada = [1, 2, 3, 4]  # Entrada de datos
+entrada = [1, 2, 3, 1]  # Entrada de datos
 validos = [True] * len(entrada)  # Array de booleanos inicializados como True
 salida = [0] * len(entrada)  # Array de enteros inicializados con ceros
 
-GenerarPermutaciones(entrada, salida, validos, 1)
+#GenerarPermutaciones(entrada, salida, validos, 1)
+
+
+#EJERCICIO 2
+"""
+Resolver el problema anterior considerando la posibilidad de que los elementos se repitan
+entre sí (por ejemplo, el vector 1, 2, 3, 1 o la cadena acabada).
+"""
+
+def intercambiar(entrada, i, j):
+    entrada[i], entrada[j] = entrada[j], entrada[i]
+
+def ejercicio2(entrada, salida, k):
+    if k >= N:
+        print(salida)
+    else:
+        for i in range(k, N):
+            saltar_iteracion = 0
+            for j in range(k, i):
+                if entrada[i] == entrada[j]:
+                    saltar_iteracion = 1
+                    break
+            if saltar_iteracion == 0:
+                salida[k] = entrada[i]
+                entrada = list(entrada)  # Convertir entrada en una lista mutable
+                intercambiar(entrada, i, k)
+                ejercicio2(entrada, salida, k + 1)
+                intercambiar(entrada, k, i)
+
+N = 4  # Asigna el valor de N
+entrada = [1,2,3,1]  # Asigna los valores de entrada
+salida = [0] * N  # Inicializa la lista de salida con N ceros
+ejercicio2(entrada, salida, 0)
+
+
+
+
+
