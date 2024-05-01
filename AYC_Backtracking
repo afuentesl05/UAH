@@ -24,9 +24,9 @@ def GenerarPermutaciones(entrada, salida, validos, k):
                 validos[i] = True
 
 #PROBADOR EJERCICIO 1
-entrada = [1, 2, 3, 1]  # Entrada de datos
-validos = [True] * len(entrada)  # Array de booleanos inicializados como True
-salida = [0] * len(entrada)  # Array de enteros inicializados con ceros
+#entrada = [1, 2, 3, 1]  # Entrada de datos
+#validos = [True] * len(entrada)  # Array de booleanos inicializados como True
+#salida = [0] * len(entrada)  # Array de enteros inicializados con ceros
 
 #GenerarPermutaciones(entrada, salida, validos, 1)
 
@@ -57,11 +57,143 @@ def ejercicio2(entrada, salida, k):
                 ejercicio2(entrada, salida, k + 1)
                 intercambiar(entrada, k, i)
 
-N = 4  # Asigna el valor de N
-entrada = [1,2,3,1]  # Asigna los valores de entrada
-salida = [0] * N  # Inicializa la lista de salida con N ceros
-ejercicio2(entrada, salida, 0)
 
+#PROBADOR EJERCICIO 2
+#N = 4  # Asigna el valor de N
+#entrada = [1,2,3,1]  # Asigna los valores de entrada
+#salida = [0] * N  # Inicializa la lista de salida con N ceros
+#ejercicio2(entrada, salida, 0)
+
+
+
+
+#EJERCICIO 5
+
+"""
+Se dispone de una tabla Laberinto[1..n,1..m] con valores lógicos que representa un
+Laberinto.
+El valor TRUE indica la existencia de una pared (no se puede atravesar), mientras que
+FALSE representa una casilla recorrible.
+Para moverse por el Laberinto, a partir de una casilla se puede desplazar horizontal o
+verticalmente, pero solo a una casilla vacía (FALSE). Los bordes de la tabla están
+completamente a TRUE excepto una casilla, que es la salida del Laberinto. Diseñar un
+algoritmo Backtracking que encuentre todos los caminos posibles que llevan a la salida
+desde una casilla inicial determinada, si es posible salir del Laberinto.
+
+Diseñar un algoritmo Backtracking que encuentre el mejor camino posible que lleve a la
+salida desde una casilla inicial determinada, si es posible salir del Laberinto.
+
+Teniendo en cuenta que:
+'#' -> pared
+'O' -> origen
+'S' -> salida
+'.' -> recorrido
+"""
+
+def recorrer(Laberinto, i, j):
+    #Comprobamos si estamos en la salida
+    if(Laberinto[i][j]=='S'):
+        print(Laberinto)
+        Laberinto[i][j] = 'S'
+        return 
+    else:
+        Laberinto[i][j] = '.' #Empezamos el camino
+        #Mirar la casilla de la izquierda o salida
+        if(i-1 < 0 and i-1 < len(Laberinto[i]) and (Laberinto[i-1][j] ==' ' or  Laberinto[i-1][j] =='S')):
+            recorrer(Laberinto, i-1, j)
+        #arriba o salida
+        if(j+1>=0 and j+1<len(Laberinto[i]) and (Laberinto[i][j+1]==' ' or Laberinto[i][j+1]=='S')):
+            recorrer(Laberinto, i, j+1)
+        #derecha o salida
+        if(i+1>=0 and i+1<len(Laberinto[i]) and (Laberinto[i+1][j]==' ' or Laberinto[i+1][j]=='S')):
+            recorrer(Laberinto, i+1, j)
+        #abajo o salida
+        if(j-1>=0 and j-1<len(Laberinto) and (Laberinto[i][j-1]==' ' or Laberinto[i][j-1]=='S')):
+            recorrer(Laberinto, i, j-1)
+        Laberinto[i][j]=' ' #Se desmarca el camino
+    
+
+
+
+
+def imprimir_laberinto(laberinto):
+    for fila in laberinto:
+        print(' '.join(fila))
+
+def probador():
+    laberinto = [
+        ['#', '#', '#', '#', '#', '#', '#', '#', '#'],
+        ['#', 'O', ' ', ' ', '#', ' ', ' ', ' ', '#'],
+        ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
+        ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
+        ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
+        ['#', '#', '#', '#', '#', '#', '#', 'S', '#']
+    ]
+    
+    print("Laberinto original:")
+    imprimir_laberinto(laberinto)
+    print("\nRecorrido:")
+    (recorrer(laberinto, 1, 1))
+    
+
+probador()
+
+
+
+"""
+
+def recorrer(laberinto, i, j):
+    # Comprobamos si estamos en la salida
+    if laberinto[i][j] == 'S':
+        return True
+    
+    # Marcamos la casilla actual como visitada
+    laberinto[i][j] = '.'
+    
+    # Movimientos posibles: arriba, abajo, izquierda, derecha
+    movimientos = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    
+    for movimiento in movimientos:
+        nueva_i = i + movimiento[0]
+        nueva_j = j + movimiento[1]
+        
+        # Verificamos si la nueva posición está dentro del laberinto y es transitable
+        if 0 <= nueva_i < len(laberinto) and 0 <= nueva_j < len(laberinto[0]) and (laberinto[nueva_i][nueva_j] == ' ' or laberinto[nueva_i][nueva_j] == 'S'):
+            if recorrer(laberinto, nueva_i, nueva_j):
+                return True
+    
+    # Si ninguna dirección conduce a la salida, marcamos la casilla como no visitada y retrocedemos
+    laberinto[i][j] = ' '
+    return False
+
+def imprimir_laberinto(laberinto):
+    for fila in laberinto:
+        print(' '.join(fila))
+
+def probador():
+    laberinto = [
+        ['#', '#', '#', '#', '#', '#', '#', '#', '#'],
+        ['#', 'O', ' ', ' ', '#', ' ', ' ', ' ', '#'],
+        ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
+        ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
+        ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
+        ['#', '#', '#', '#', '#', '#', '#', 'S', '#']
+    ]
+    
+    print("Laberinto original:")
+    imprimir_laberinto(laberinto)
+    print("\nRecorrido:")
+    if recorrer(laberinto, 1, 1):
+        print("Se encontró un camino a la salida.")
+        print("\nLaberinto después del recorrido:")
+        imprimir_laberinto(laberinto)
+    else:
+        print("No se encontró un camino a la salida.")
+
+probador()
+
+
+"""
 
 
 
