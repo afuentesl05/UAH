@@ -112,88 +112,80 @@ def recorrer(Laberinto, i, j):
             recorrer(Laberinto, i, j-1)
         Laberinto[i][j]=' ' #Se desmarca el camino
     
-
-
-
-
-def imprimir_laberinto(laberinto):
-    for fila in laberinto:
-        print(' '.join(fila))
-
-def probador():
-    laberinto = [
+#PROBADOR EJERCICIO 5 (LABERINTO)
+laberinto = [
         ['#', '#', '#', '#', '#', '#', '#', '#', '#'],
         ['#', 'O', ' ', ' ', '#', ' ', ' ', ' ', '#'],
         ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
         ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
         ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
         ['#', '#', '#', '#', '#', '#', '#', 'S', '#']
-    ]
+]
     
-    print("Laberinto original:")
-    imprimir_laberinto(laberinto)
-    print("\nRecorrido:")
-    (recorrer(laberinto, 1, 1))
+#print("\nRecorrido:")
+#recorrer(laberinto, 1, 1)
     
+#EJERCICIO 6
+"""
+Se tiene la tabla de sustitución que aparece a continuación:
 
-probador()
 
+que se usa de la manera siguiente: en una cadena cualquiera, dos caracteres consecutivos
+se pueden sustituir por el valor que aparece en la tabla, utilizando el primer carácter como
+fila y el segundo carácter como columna. Por ejemplo, se puede cambiar la secuencia ca
+por una b, ya que M[c,a]=b.
 
+Implementar un algoritmo Backtracking que, a partir de una cadena no vacía texto y
+utilizando la información almacenada en una tabla de sustitución M, sea capaz de
+encontrar la forma de realizar las sustituciones que permite reducir la cadena texto a un
+carácter final, si es posible.
 
+Ejemplo: Con la cadena texto=acabada y el carácter final=d, una posible forma de
+sustitución es la siguiente (las secuencias que se sustituyen se marcan para mayor
+claridad): acabada  acacda  abcda  abcd  bcd  bc  d.
 """
 
-def recorrer(laberinto, i, j):
-    # Comprobamos si estamos en la salida
-    if laberinto[i][j] == 'S':
-        return True
-    
-    # Marcamos la casilla actual como visitada
-    laberinto[i][j] = '.'
-    
-    # Movimientos posibles: arriba, abajo, izquierda, derecha
-    movimientos = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-    
-    for movimiento in movimientos:
-        nueva_i = i + movimiento[0]
-        nueva_j = j + movimiento[1]
-        
-        # Verificamos si la nueva posición está dentro del laberinto y es transitable
-        if 0 <= nueva_i < len(laberinto) and 0 <= nueva_j < len(laberinto[0]) and (laberinto[nueva_i][nueva_j] == ' ' or laberinto[nueva_i][nueva_j] == 'S'):
-            if recorrer(laberinto, nueva_i, nueva_j):
-                return True
-    
-    # Si ninguna dirección conduce a la salida, marcamos la casilla como no visitada y retrocedemos
-    laberinto[i][j] = ' '
-    return False
 
-def imprimir_laberinto(laberinto):
-    for fila in laberinto:
-        print(' '.join(fila))
+def sustituir(cadena, M, final, visitados):
+    # Si la cadena ya es igual al carácter final, retornamos la cadena
+    if cadena == final:
+        return cadena
+    # Recorremos la cadena
+    for i in range(len(cadena)-1):
+        # Formamos el par de caracteres a sustituir
+        par = cadena[i:i+2] 
+        # Verificamos si el par está en la tabla de sustitución
+        if par in M:
+            # Sustituimos el par por el valor correspondiente en la tabla de sustitución
+            nueva_cadena = cadena[:i] + M[par] + cadena[i+2:]
+            # Si la nueva cadena no ha sido visitada antes
+            if nueva_cadena not in visitados:
+                # Agregamos la nueva cadena a la lista de visitados
+                visitados.add(nueva_cadena)
+                # Llamamos recursivamente a la función con la nueva cadena
+                resultado = sustituir(nueva_cadena, M, final, visitados)
+                # Si se encuentra una solución, retornamos la cadena resultante
+                if resultado:
+                    return resultado
+    # Si no se encontró ninguna solución, retornamos None
+    return None
 
-def probador():
-    laberinto = [
-        ['#', '#', '#', '#', '#', '#', '#', '#', '#'],
-        ['#', 'O', ' ', ' ', '#', ' ', ' ', ' ', '#'],
-        ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
-        ['#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'],
-        ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-        ['#', '#', '#', '#', '#', '#', '#', 'S', '#']
-    ]
-    
-    print("Laberinto original:")
-    imprimir_laberinto(laberinto)
-    print("\nRecorrido:")
-    if recorrer(laberinto, 1, 1):
-        print("Se encontró un camino a la salida.")
-        print("\nLaberinto después del recorrido:")
-        imprimir_laberinto(laberinto)
-    else:
-        print("No se encontró un camino a la salida.")
-
-probador()
+# Ejemplo de uso
+texto = "acabadcda"
+final = "d"
+M = {"aa":"b", "ab": "b", "ac": "a", "ad": "d", "ba": "c", "bb": "a", "bc": "d", "bd": "a", "ca": "b", "cb": "a", "cc": "c", "cd": "c", "da": "d", "db": "c", "dc": "d", "dd": "b"}
+visitados = set()
+resultado = sustituir(texto, M, final, visitados)
+if resultado:
+    print("Cadena reducida a un solo carácter:", resultado)
+else:
+    print("No se encontró solución")
 
 
-"""
+
+
+
+
 
 
 
