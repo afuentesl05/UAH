@@ -1,0 +1,31 @@
+#PRÁCTICA 5 BACKTRACKING
+
+#EJERCICIO 1
+
+"""
+Se tienen N elementos distintos almacenados en una estructura de acceso directo (por
+ejemplo, un vector con los números 1, 2, 3, 4 y 5, o la cadena abcdefg) y se quiere obtener
+todas las formas distintas de colocar esos elementos, es decir, hay que conseguir todas las
+permutaciones de los N elementos. Diseñar un algoritmo que use Backtracking para
+resolver el problema.
+"""
+# Procedimiento para generar todas las permutaciones
+def GenerarPermutaciones(entrada, salida, validos, k):
+    """ 
+    """
+    if k > len(entrada):
+        print(salida)  # Imprimir la permutación encontrada
+    else:
+        for i in range(len(entrada)):
+            if validos[i]:
+                validos[i] = False
+                salida[k - 1] = entrada[i]
+                GenerarPermutaciones(entrada, salida, validos, k + 1)
+                validos[i] = True
+
+#PROBADOR EJERCICIO 1
+entrada = [1, 2, 3, 4]  # Entrada de datos
+validos = [True] * len(entrada)  # Array de booleanos inicializados como True
+salida = [0] * len(entrada)  # Array de enteros inicializados con ceros
+
+GenerarPermutaciones(entrada, salida, validos, 1)
