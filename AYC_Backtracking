@@ -11,8 +11,6 @@ resolver el problema.
 """
 # Procedimiento para generar todas las permutaciones
 def GenerarPermutaciones(entrada, salida, validos, k):
-    """ 
-    """
     if k > len(entrada):
         print(salida)  # Imprimir la permutación encontrada
     else:
@@ -24,7 +22,7 @@ def GenerarPermutaciones(entrada, salida, validos, k):
                 validos[i] = True
 
 #PROBADOR EJERCICIO 1
-#entrada = [1, 2, 3, 1]  # Entrada de datos
+#entrada = [1, 2, 3, 4]  # Entrada de datos
 #validos = [True] * len(entrada)  # Array de booleanos inicializados como True
 #salida = [0] * len(entrada)  # Array de enteros inicializados con ceros
 
@@ -104,64 +102,6 @@ cadena = '1151451'
 resultados = backtracking_numeros(N, cadena)
 print("Números válidos de", N, "cifras:", resultados)
 """
-
-# EJERCICIO 4
-"""
-Se dispone de un tablero M de tamaño FxC (F es la cantidad de filas y C la cantidad de
-columnas) y se pone en una casilla inicial (posx, posy) un caballo de ajedrez. El objetivo
-es encontrar, si es posible, la forma en la que el caballo debe moverse para recorrer todo
-el tablero de manera que cada casilla se utilice una única vez en el recorrido (el tablero
-8x8 siempre tiene solución independientemente de dónde comience el caballo). El caballo
-puede terminar en cualquier posición del tablero.
-Un caballo tiene ocho posibles movimientos (suponiendo, claro está, que no se sale del
-tablero). Un movimiento entre las casillas Mij y Mpq es válido solamente si:
-• (|p–i|=1)&&(|q–j|=2), o bien si
-• (|p–i|=2)&&(|q–j|=1),
-es decir, una coordenada cambia dos unidades y la otra una única unidad.
-"""
-
-def es_movimiento_valido(tablero, fila, columna, fila_nueva, columna_nueva):
-    if fila_nueva < 0 or fila_nueva >= len(tablero) or columna_nueva < 0 or columna_nueva >= len(tablero[0]):
-        return False
-    if tablero[fila_nueva][columna_nueva] != -1:
-        return False
-    return (abs(fila_nueva - fila) == 1 and abs(columna_nueva - columna) == 2) or \
-           (abs(fila_nueva - fila) == 2 and abs(columna_nueva - columna) == 1)
-
-def encontrar_camino_caballo(F, C, posx, posy):
-    tablero = [[-1] * C for _ in range(F)]
-    movimientos_posibles = [(1, 2), (1, -2), (-1, 2), (-1, -2), (2, 1), (2, -1), (-2, 1), (-2, -1)]
-
-    def backtrack(fila, columna, movimiento_actual):
-        tablero[fila][columna] = movimiento_actual
-        if movimiento_actual == F * C:
-            return True
-        for dx, dy in movimientos_posibles:
-            nueva_fila, nueva_columna = fila + dx, columna + dy
-            if es_movimiento_valido(tablero, fila, columna, nueva_fila, nueva_columna):
-                if backtrack(nueva_fila, nueva_columna, movimiento_actual + 1):
-                    return True
-        tablero[fila][columna] = -1
-        return False
-
-    if backtrack(posx, posy, 1):
-        return tablero
-    else:
-        return None
-
-# Ejemplo de uso
-F, C = 8, 8
-posx, posy = 6, 6  # Posición inicial del caballo
-solucion = encontrar_camino_caballo(F, C, posx, posy)
-if solucion:
-    print("Solución encontrada:")
-    #for fila in solucion:
-     #   print(fila)
-else:
-    print("No se encontró solución.")
-
-
-    
 
 #EJERCICIO 5
 
@@ -254,7 +194,7 @@ def sustituir(cadena, M, final, visitados):
             # Sustituimos el par por el valor correspondiente en la tabla de sustitución
             nueva_cadena = cadena[:i] + M[par] + cadena[i+2:]
             # Si la nueva cadena no ha sido visitada antes
-            if nueva_cadena not in visitados:
+            if nueva_cadena not in visitados: 
                 # Agregamos la nueva cadena a la lista de visitados
                 visitados.add(nueva_cadena)
                 # Llamamos recursivamente a la función con la nueva cadena
@@ -263,10 +203,10 @@ def sustituir(cadena, M, final, visitados):
                 if resultado:
                     return resultado
     # Si no se encontró ninguna solución, retornamos None
-    return None
+    return None 
 
 # Ejemplo de uso
-texto = "acabadcda"
+texto = "acabade"
 final = "d"
 M = {"aa":"b", "ab": "b", "ac": "a", "ad": "d", "ba": "c", "bb": "a", "bc": "d", "bd": "a", "ca": "b", "cb": "a", "cc": "c", "cd": "c", "da": "d", "db": "c", "dc": "d", "dd": "b"}
 visitados = set() 
