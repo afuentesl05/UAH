@@ -65,6 +65,51 @@ def ejercicio2(entrada, salida, k):
 #ejercicio2(entrada, salida, 0)
 
 
+#EJERCICIO 3
+"""
+Se tiene un número de Tam cifras almacenado en una cadena de texto; por ejemplo, la
+cadena dato = 1151451.
+Diseñar un algoritmo que mediante técnicas de Backtracking encuentre, de la manera más
+eficiente posible, todos los números distintos de N cifras que puedan formarse con los
+números de la cadena sin alterar su orden relativo dentro de la misma.
+Por ejemplo, si N = 4, son números válidos 1151, 1511 y 1541, pero no 4551 o 5411 que
+aunque pueden formarse con los dígitos de la cadena dato implican una reordenación.
+"""
+
+def backtracking_numeros(N, cadena):
+    def backtrack(comb, index):
+        nonlocal numeros_set
+        if len(comb) == N:
+            numeros_set.add(comb)
+            return
+        if index == len(cadena):
+            return
+        for i in range(index, len(cadena)):
+            backtrack(comb + cadena[i], i + 1)
+
+    numeros_set = set()
+    backtrack('', 0)
+    return numeros_set
+
+# Ejemplo de uso
+N = 2
+cadena = '1151451'
+resultados = backtracking_numeros(N, cadena)
+print("Números válidos de", N, "cifras:", resultados)
+
+    
+
+#PROBADOR EJERCICIO 3
+cadena = "1151451"
+N = 2
+visitados = set()
+# funcion(cadena, N, visitados)
+
+
+
+
+
+
 
 
 #EJERCICIO 5
@@ -145,7 +190,6 @@ sustitución es la siguiente (las secuencias que se sustituyen se marcan para ma
 claridad): acabada  acacda  abcda  abcd  bcd  bc  d.
 """
 
-
 def sustituir(cadena, M, final, visitados):
     # Si la cadena ya es igual al carácter final, retornamos la cadena
     if cadena == final:
@@ -181,7 +225,7 @@ if resultado:
 else:
     print("No se encontró solución")
 
-#uhuh
+
 
 
 
