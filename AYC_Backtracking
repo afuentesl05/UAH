@@ -206,7 +206,7 @@ def sustituir(cadena, M, final, visitados):
     return None 
 
 # Ejemplo de uso
-texto = "acabade"
+texto = "acabad"
 final = "d"
 M = {"aa":"b", "ab": "b", "ac": "a", "ad": "d", "ba": "c", "bb": "a", "bc": "d", "bd": "a", "ca": "b", "cb": "a", "cc": "c", "cd": "c", "da": "d", "db": "c", "dc": "d", "dd": "b"}
 visitados = set() 
