@@ -77,40 +77,91 @@ aunque pueden formarse con los dígitos de la cadena dato implican una reordenac
 """
 
 def backtracking_numeros(N, cadena):
+    """ N, cadena --> int, str
+    OBJ: esta función recibe como parámetros N, que es la longitud de las combinaciones posibles, y la cadena de números
+    con la que realizar las combinaciones.
+    """
     def backtrack(comb, index):
-        nonlocal numeros_set
+        """
+        """
+        nonlocal visitados # variable para ambas funciones (nonlocal)
         if len(comb) == N:
-            numeros_set.add(comb)
+            visitados.add(comb) # se asegura que no se añadan repetidos (el add para conjuntos no añade duplicados)
             return
-        if index == len(cadena):
+        if index == len(cadena): # si el índice coincide con el final de la cadena, ya no se pueden añadir más elementos 
             return
-        for i in range(index, len(cadena)):
-            backtrack(comb + cadena[i], i + 1)
+        for i in range(index, len(cadena)): # en el rango de tantos carácteres numéricos tenga la cadena 
+            backtrack(comb + cadena[i], i + 1) # llamada recursiva añadiendo a la combinación el siguiente carácter y moviendo el índice 1 a la derecha
 
-    numeros_set = set()
-    backtrack('', 0)
-    return numeros_set
+    visitados = set() #estableces un conjunto vacío
+    backtrack('', 0) #primera llamada recursiva de bakctrack con cadena vacia y el primer índice de la cadena (0)
+    return visitados
 
-# Ejemplo de uso
+# PROBADOR EJERCICIO 3  
+"""
 N = 2
 cadena = '1151451'
 resultados = backtracking_numeros(N, cadena)
 print("Números válidos de", N, "cifras:", resultados)
+"""
+
+# EJERCICIO 4
+"""
+Se dispone de un tablero M de tamaño FxC (F es la cantidad de filas y C la cantidad de
+columnas) y se pone en una casilla inicial (posx, posy) un caballo de ajedrez. El objetivo
+es encontrar, si es posible, la forma en la que el caballo debe moverse para recorrer todo
+el tablero de manera que cada casilla se utilice una única vez en el recorrido (el tablero
+8x8 siempre tiene solución independientemente de dónde comience el caballo). El caballo
+puede terminar en cualquier posición del tablero.
+Un caballo tiene ocho posibles movimientos (suponiendo, claro está, que no se sale del
+tablero). Un movimiento entre las casillas Mij y Mpq es válido solamente si:
+• (|p–i|=1)&&(|q–j|=2), o bien si
+• (|p–i|=2)&&(|q–j|=1),
+es decir, una coordenada cambia dos unidades y la otra una única unidad.
+"""
+
+def es_movimiento_valido(tablero, fila, columna, fila_nueva, columna_nueva):
+    if fila_nueva < 0 or fila_nueva >= len(tablero) or columna_nueva < 0 or columna_nueva >= len(tablero[0]):
+        return False
+    if tablero[fila_nueva][columna_nueva] != -1:
+        return False
+    return (abs(fila_nueva - fila) == 1 and abs(columna_nueva - columna) == 2) or \
+           (abs(fila_nueva - fila) == 2 and abs(columna_nueva - columna) == 1)
+
+def encontrar_camino_caballo(F, C, posx, posy):
+    tablero = [[-1] * C for _ in range(F)]
+    movimientos_posibles = [(1, 2), (1, -2), (-1, 2), (-1, -2), (2, 1), (2, -1), (-2, 1), (-2, -1)]
+
+    def backtrack(fila, columna, movimiento_actual):
+        tablero[fila][columna] = movimiento_actual
+        if movimiento_actual == F * C:
+            return True
+        for dx, dy in movimientos_posibles:
+            nueva_fila, nueva_columna = fila + dx, columna + dy
+            if es_movimiento_valido(tablero, fila, columna, nueva_fila, nueva_columna):
+                if backtrack(nueva_fila, nueva_columna, movimiento_actual + 1):
+                    return True
+        tablero[fila][columna] = -1
+        return False
+
+    if backtrack(posx, posy, 1):
+        return tablero
+    else:
+        return None
+
+# Ejemplo de uso
+F, C = 8, 8
+posx, posy = 6, 6  # Posición inicial del caballo
+solucion = encontrar_camino_caballo(F, C, posx, posy)
+if solucion:
+    print("Solución encontrada:")
+    #for fila in solucion:
+     #   print(fila)
+else:
+    print("No se encontró solución.")
+
 
     
-
-#PROBADOR EJERCICIO 3
-cadena = "1151451"
-N = 2
-visitados = set()
-# funcion(cadena, N, visitados)
-
-
-
-
-
-
-
 
 #EJERCICIO 5
 
